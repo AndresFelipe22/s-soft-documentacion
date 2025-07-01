@@ -30,13 +30,13 @@ public class DataInitializationComponent implements CommandLineRunner {
     }
 
     private void initializeAdminUser() {
-        String adminUsername = "juanmateopro77@gmail.com";
+        String adminUsername = "andresfmaceto@gmail.com";
 
         if (userRepository.findByEmail(adminUsername)==null) {
             User adminUser = new User();
 
             adminUser.setPassword(passwordEncoder.encode("mateo1234"));
-            adminUser.setFullName("Mateo");
+            adminUser.setFullName("Andres");
             adminUser.setEmail(adminUsername);
             adminUser.setRole(USER_ROLE.ROLE_ADMIN);
 
@@ -48,7 +48,7 @@ public class DataInitializationComponent implements CommandLineRunner {
 
 
     private void initializeSellerUser() {
-        String sellerUsername = "mateuspro77@gmail.com";
+        String sellerUsername = "andresfmaceto@gmail.com";
 
         if (sellerRepository.findByEmail(sellerUsername)==null) {
             Seller sellerUser = new Seller();

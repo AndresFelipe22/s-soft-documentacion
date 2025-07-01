@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ComercioElectronicoApplication<comercio_electronico>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.softwares.ComercioElectronicoApplication",
+            "projectName": "comercio_electronico",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

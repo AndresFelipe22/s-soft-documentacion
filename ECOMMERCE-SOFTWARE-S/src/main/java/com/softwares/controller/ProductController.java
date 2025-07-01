@@ -9,6 +9,10 @@ import com.softwares.exceptions.ProductException;
 import com.softwares.models.Product;
 import com.softwares.service.ProductService;
 
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -37,30 +41,41 @@ public class ProductController {
 
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long productId) throws ProductException {
 
+    @Operation(summary = "Obtener producto por ID", description = "Devuelve un producto según su ID.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Producto encontrado exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    })
+    public ResponseEntity<Product> getProductById(@PathVariable Long productId) throws ProductException {
         Product product = productService.findProductById(productId);
         return new ResponseEntity<>(product, HttpStatus.OK);
-
     }
 
-    @GetMapping("/search")
+    @Operation(summary = "Buscar productos", description = "Busca productos por nombre o descripción. Si no se envía query, retorna todos los productos.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista de productos encontrada")
+    })
     public ResponseEntity<List<Product>> searchProduct(@RequestParam(required = false) String query) {
         List<Product> products = productService.searchProduct(query);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam(required = false) String category,
-                                                        @RequestParam(required = false) String brand,
-                                                        @RequestParam(required = false) String color,
-                                                        @RequestParam(required = false) String size,
-                                                        @RequestParam(required = false) Integer minPrice,
-                                                        @RequestParam(required = false) Integer maxPrice,
-                                                        @RequestParam(required = false) Integer minDiscount,
-                                                        @RequestParam(required = false) String sort,
-                                                        @RequestParam(required = false) String stock,
-                                                        @RequestParam(defaultValue = "0") Integer pageNumber) {
+    @Operation(summary = "Listar productos con filtros", description = "Obtiene una página de productos filtrando por diferentes parámetros.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Página de productos obtenida exitosamente")
+    })
+    public ResponseEntity<Page<Product>> getAllProducts(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String color,
+            @RequestParam(required = false) String size,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false) Integer minDiscount,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String stock,
+            @RequestParam(defaultValue = "0") Integer pageNumber) {
         System.out.println("color p -------- "+pageNumber);
         return new ResponseEntity<>(
                 productService.getAllProduct(category,brand,
